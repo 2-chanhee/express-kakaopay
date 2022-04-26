@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', function (req, res) {
-    console.log('req.body', req.body);
-    res.json(req.body);
-});
+const payment = require('./payment');
+
+router.post('/payment', payment.kakaopay);
 
 module.exports = router;

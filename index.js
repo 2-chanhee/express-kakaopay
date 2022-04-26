@@ -5,7 +5,7 @@ const router = require('./router');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/payment', router);
+app.use('/', router);
 
 const port = 3000; // 사용할 포트 번호를 port 변수에 넣습니다.
 app.listen(port, function () {
