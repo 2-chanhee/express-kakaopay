@@ -8,7 +8,7 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script type="text/javascript">
             const tid = localStorage.getItem('tid');
-            const pgToken = location.search.toString().slice(10);
+            const pgToken = new URLSearchParams(window.location.search.toString()).get('pg_token');
 
             const data = {
                 cid: 'TC0ONETIME',
@@ -17,15 +17,6 @@
                 partner_user_id: 'partner_user_id',
                 pg_token: `${pgToken}`
             };
-
-            // // set data
-            // const data = [
-            //     'cid=TC0ONETIME',
-            //     `tid=${tid}`,
-            //     'partner_order_id=partner_order_id',
-            //     'partner_user_id=partner_user_id',
-            //     `pg_token=${pgToken}`
-            // ].join('&'); // encode data (application/x-www-form-urlencoded)
 
             axios.post('http://localhost:3000/approve', data).then(data => console.log('success response', data.data));
         </script>
