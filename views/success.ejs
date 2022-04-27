@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>success</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="text/javascript">
+            const tid = localStorage.getItem('tid');
+            const pgToken = location.search.toString().slice(10);
+
+            const data = {
+                cid: 'TC0ONETIME',
+                tid: `${tid}`,
+                partner_order_id: 'partner_order_id',
+                partner_user_id: 'partner_user_id',
+                pg_token: `${pgToken}`
+            };
+
+            // // set data
+            // const data = [
+            //     'cid=TC0ONETIME',
+            //     `tid=${tid}`,
+            //     'partner_order_id=partner_order_id',
+            //     'partner_user_id=partner_user_id',
+            //     `pg_token=${pgToken}`
+            // ].join('&'); // encode data (application/x-www-form-urlencoded)
+
+            axios.post('http://localhost:3000/approve', data).then(data => console.log('success response', data.data));
+        </script>
+    </head>
+    <body>
+        <h1>kakaopay api test - success</h1>
+    </body>
+</html>
