@@ -7,6 +7,17 @@ app.use(express.json());
 
 app.use('/', router);
 
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
+app.get('/', (req, res) => {
+    res.render('ready');
+});
+
+app.get('/success', (req, res) => {
+    res.render('success');
+});
+
 const port = 3000; // 사용할 포트 번호를 port 변수에 넣습니다.
 app.listen(port, function () {
     // port변수를 이용하여 3000번 포트에 node.js 서버를 연결합니다.

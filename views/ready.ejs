@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="text/javascript">
+            function ready() {
+                axios
+                    .post('http://localhost:3000/ready')
+                    .then(data => {
+                        console.log(data.data.tid, data.data.next_redirect_pc_url);
+                        window.localStorage.setItem('tid', data.data.tid);
+                        window.open(data.data.next_redirect_pc_url);
+                    })
+                    .then(() => console.log('asdfasdf'))
+                    .catch(e => {
+                        console.log('error', e);
+                    });
+            }
+        </script>
+    </head>
+    <body>
+        <h1>kakaopay api test - ready</h1>
+        <button onclick="ready()">카카오페이로 결제하기</button>
+    </body>
+</html>

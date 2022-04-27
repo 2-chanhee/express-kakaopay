@@ -3,6 +3,10 @@ const router = express.Router();
 
 const payment = require('./payment');
 
-router.post('/payment', payment.kakaopay);
+// 준비
+router.post('/ready', payment.ready);
+
+// 승인
+router.post('/approve', payment.approve);
 
 module.exports = router;

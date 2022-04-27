@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-module.exports.kakaopay = async (req, res, next) => {
+module.exports.ready = async (req, res, next) => {
     // set variables
     const item_name = '초코파이';
     const quantity = 1;
@@ -8,7 +8,7 @@ module.exports.kakaopay = async (req, res, next) => {
     const vat_amount = 200;
     const tax_free_amount = 0;
 
-    const approval_url = 'http://example.com/success';
+    const approval_url = 'http://localhost:3000/success'; // 'http://example.com/success';
     const fail_url = 'http://example.com/fail';
     const cancel_url = 'http://example.com/cancel';
 
@@ -30,28 +30,33 @@ module.exports.kakaopay = async (req, res, next) => {
     // send request (kakao payment)
     const reqToKakao = await axios.post('https://kapi.kakao.com/v1/payment/ready', data, {
         headers: {
-            Authorization: 'KakaoAK 4c75e49b77bba7b7442226e8f18780cb', // 'xxx...' = admin key
-            'Content-Type': 'application/x-www-form-urlencoded'
+            Authorization: 'KakaoAK 4c75e49b77bba7b7442226e8f18780cb',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
     });
 
-    console.log('req nest re', reqToKakao);
+    res.json(reqToKakao.data);
+};
 
-    const pc_url = reqToKakao.data.next_redirect_pc_url; // get pc url
+module.exports.approve = async (req, res, next) => {
+    const body = req.body;
 
-    const response = {
-        statusCode: 301, // redirect
+    console.log(body);
+
+    const data = [
+        `cid=${body.cid}`,
+        `tid=${body.tid}`,
+        `partner_order_id=${body.partner_order_id}`,
+        `partner_user_id=${body.partner_user_id}`,
+        `pg_token=${body.pg_token}`
+    ].join('&');
+
+    const res_ = await axios.post('https://kapi.kakao.com/v1/payment/approve', data, {
         headers: {
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            Pragma: 'no-cache',
-            Expires: '0',
-            Location: pc_url
-        },
-        body: ''
-    };
+            Authorization: 'KakaoAK 4c75e49b77bba7b7442226e8f18780cb',
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+    });
 
-    console.log('response', response);
-
-    return response;
-    res.json(req.body);
+    res.json(res_.data);
 };
